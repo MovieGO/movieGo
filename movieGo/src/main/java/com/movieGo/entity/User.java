@@ -1,5 +1,6 @@
 package com.movieGo.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -55,7 +56,7 @@ public class User extends baseEntity{
             				CascadeType.MERGE,
             				CascadeType.REMOVE },
     		   mappedBy = "user")
-  	private @Getter Set<Order> orders;
+  	private @Getter Set<Order> orders = new HashSet<Order>();
     
     public void addOrder(Order order) {
     	orders.add(order);
