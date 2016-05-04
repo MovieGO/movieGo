@@ -9,6 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name="Movie")
 public class Movie extends baseEntity{
@@ -23,20 +26,20 @@ public class Movie extends baseEntity{
 	
 	
 	@Column(nullable = false)
-	private String name;
+	private @Getter @Setter String name;
 	
 	@Column
-	private String rating;
+	private @Getter @Setter String rating;
 	
 	@Column(nullable = false)
-	private String length;
+	private @Getter @Setter String length;
 	
 	@Column
-	private String director;
+	private @Getter @Setter String director;
 	
 	@Column
-	private String[] stars;
+	private @Getter String[] stars;
 	
 	@Column(nullable = false)
-	private Date premiereTime;
+	private @Getter @Setter Date premiereTime;
 }

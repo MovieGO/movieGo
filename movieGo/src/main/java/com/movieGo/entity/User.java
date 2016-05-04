@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -44,7 +45,7 @@ public class User extends baseEntity{
 	private @Setter @Getter String city;
     
     @Column(nullable = false)
-	private @Setter @Getter String role;
+	private @Setter @Getter String role = ROLE_USER;
     
     @Column
 	private @Setter @Getter int gender;
@@ -56,7 +57,7 @@ public class User extends baseEntity{
             				CascadeType.MERGE,
             				CascadeType.REMOVE },
     		   mappedBy = "user")
-  	private @Getter Set<Order> orders = new HashSet<Order>();
+  	private @Getter Set<Order> orders = new HashSet<>();
     
     public void addOrder(Order order) {
     	orders.add(order);

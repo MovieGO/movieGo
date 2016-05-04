@@ -4,13 +4,14 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
 
-@Table(name="Order")
+@Table(name="Orders")
 @Entity
 
 public class Order extends baseEntity{
@@ -19,6 +20,11 @@ public class Order extends baseEntity{
 	 * 
 	 */
 	private static final long serialVersionUID = 3083641849975822426L;
+	
+	@ManyToOne
+	@JoinColumn(nullable = false)
+	private @Setter @Getter User user;
+	
 	
 	public static final int maxOrderN = 4;
 	
@@ -29,8 +35,6 @@ public class Order extends baseEntity{
 	@ManyToOne
 	private @Setter @Getter Session session;
 	
-	@ManyToOne
-	private @Setter @Getter User user;
 	
 	@Column(nullable = false)
 	private @Setter @Getter Double bill;

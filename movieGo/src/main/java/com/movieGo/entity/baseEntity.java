@@ -1,6 +1,8 @@
 package com.movieGo.entity;
 
 import lombok.Data;
+import lombok.Getter;
+
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
@@ -19,13 +21,13 @@ public abstract class baseEntity implements Comparable<baseEntity>, Serializable
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private @Getter Long id;
 
     @Column(nullable = false)
-    private Date createdAt;
+    private @Getter Date createdAt;
 
     @Column(nullable = false)
-    private Date updatedAt;
+    private @Getter Date updatedAt;
 
     @PrePersist
     public void prePersist(){

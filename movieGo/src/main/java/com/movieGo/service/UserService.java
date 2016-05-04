@@ -22,7 +22,11 @@ import com.movieGo.entity.User;
 import com.movieGo.form.changePwForm;
 import com.movieGo.repo.UserRepo;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Service
+
 public class UserService implements UserDetailsService{
 	
 	@Autowired

@@ -5,9 +5,13 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import com.movieGo.MovieGoApplication;
+import org.springframework.context.annotation.*;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.beans.factory.annotation.Value;
+
+import lombok.Getter;
+import lombok.Setter;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -21,21 +25,15 @@ import org.springframework.transaction.annotation.TransactionManagementConfigure
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackageClasses = MovieGoApplication.class)
-class JpaConfig implements TransactionManagementConfigurer {
-
-    @Value("${spring.dataSource.driverClassName}")
-    private String driver;
-    @Value("${spring.dataSource.username}")
+@ImportResource("classpath:Jpa-conf.xml")
+@Getter @Setter
+class jpaConfig implements TransactionManagementConfigurer {
+	private String driver;
     private String username;
-    @Value("${spring.dataSource.password}")
     private String password;
-    @Value("${spring.hibernate.dialect}")
     private String dialect;
-    @Value("${spring.hibernate.hbm2ddl.auto}")
     private String hbm2ddlAuto;
-    @Value("${spring.hibernate.show_sql}")
     private Boolean showSql;
-    @Value("${spring.dataSource.url}")
     private String url;
     @Bean
     public DataSource configureDataSource() {
