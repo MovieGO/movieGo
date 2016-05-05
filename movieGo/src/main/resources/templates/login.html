@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+    	<title>login page</title>
+    	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    	<!--<link rel="stylesheet" type="text/css" media="all" href="../../css/stsm.css" th:href="@{/css/stsm.css}"/>  -->
+  	</head>
+  	<body>
+  		<h1> Log in: </h1> 
+  		<form action="/authenticate" method="post">
+  			<input type="text" name="username"/>
+  			<input type="text" name="password"/>
+  			<input type="submit" value="提交"/>
+  		</form>
+  		<a href="/signup">"sign up"</a>
+  	</body>
+  	
+</html>

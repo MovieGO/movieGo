@@ -32,6 +32,8 @@ public class Order extends baseEntity{
 		WAITPAY, PAID, CANCELED, SUCCEED;
 	}
 	
+	public Order() {super();}
+	
 	@ManyToOne
 	private @Setter @Getter Session session;
 	

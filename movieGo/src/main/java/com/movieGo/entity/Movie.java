@@ -24,6 +24,7 @@ public class Movie extends baseEntity{
 	@ManyToMany(mappedBy = "movies")
 	private List<Cinema> cinemas = new ArrayList<Cinema>();
 	
+	public Movie() {super();}
 	
 	@Column(nullable = false)
 	private @Getter @Setter String name;

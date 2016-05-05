@@ -25,6 +25,9 @@ public class Session extends baseEntity{
 	public static enum seatStatus {
 		AVAILABLE, LOCKED, UNAVAILABLE, NOTASEAT
 	}
+	
+	public Session() {super();}
+	
 	@ManyToOne
 	private Cinema cinema;
 	

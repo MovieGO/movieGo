@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
@@ -19,6 +20,11 @@ public class securityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private UserService userService;
 	
+	@Override
+	public UserDetailsService userDetailsServiceBean() {
+		return userService;
+	}
+	
 	@Bean
     public PasswordEncoder passwordEncoder() {
         return new StandardPasswordEncoder();
@@ -29,16 +35,18 @@ public class securityConfig extends WebSecurityConfigurerAdapter{
         return new TokenBasedRememberMeServices("rememberMe", userService);
     }
 	
+	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-				.antMatchers("/logged/**").permitAll()
-				.antMatchers("/admin/**").hasRole("ADMIN") 
-				.anyRequest().authenticated()
+				.antMatchers("/signup").permitAll()
+				.antMatchers("/admin/**").hasRole("ADMIN")
+				.anyRequest().authenticated() 
 				.and()
 			.formLogin()
 				.loginPage("/login")
 				.permitAll()
+				.loginProcessingUrl("/authenticate")
 				.and()
 			.logout()
 				.logoutUrl("/logout")
@@ -49,6 +57,8 @@ public class securityConfig extends WebSecurityConfigurerAdapter{
                 .rememberMeServices(rememberMeService())
                 .key("rememberMe")
 			;
+		http
+		 	.csrf().disable();
 	}
 	
 	@Override
@@ -60,5 +70,3 @@ public class securityConfig extends WebSecurityConfigurerAdapter{
     }
 	
 }
-
-//class mySecurityManager implements S

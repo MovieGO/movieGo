@@ -29,6 +29,7 @@ public class User extends baseEntity{
 	
     public static final String ROLE_USER  = "ROLE_USER";
     
+    public User() {super();}
 	public User(String mail, String pw, String role) {
 		this.mail = mail;
         this.pw = pw;
@@ -41,7 +42,7 @@ public class User extends baseEntity{
     @Column(nullable = false)
 	private @Setter @Getter String pw;
     
-    @Column(nullable = false)
+    @Column
 	private @Setter @Getter String city;
     
     @Column(nullable = false)

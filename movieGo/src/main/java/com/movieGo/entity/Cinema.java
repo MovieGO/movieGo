@@ -26,6 +26,8 @@ public class Cinema  extends baseEntity{
 			   mappedBy = "cinema")
 	private @Getter Set<Session> sessions;
 	
+	public Cinema() {super();}
+	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable( name = "cinema_movie",
     			joinColumns = {@JoinColumn(name = "cinema_id", nullable = false, updatable = false)},

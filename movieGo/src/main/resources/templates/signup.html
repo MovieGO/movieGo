@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+    	<title>signup page</title>
+    	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    	<!--<link rel="stylesheet" type="text/css" media="all" href="../../css/stsm.css" th:href="@{/css/stsm.css}"/>  -->
+  	</head>
+  	<body>
+  		<h1> Sign up: </h1> 
+  		<form actiom="#" th:action="@{/signup}" th:object="${user}" method="post">
+  			<input type="text" th:field="*{mail}"/>
+  			<input type="text" th:field="*{pw}"/>
+  			<input type="text" th:field="*{gender}"/>
+  			<input type="text" th:field="*{age}"/>
+  			<input type="text" th:field="*{city}"/>
+  			<input type="submit" value="提交"/>
+  		</form>
+  	</body>
+  	
+</html>

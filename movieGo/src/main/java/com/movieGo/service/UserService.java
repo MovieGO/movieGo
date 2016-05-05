@@ -3,8 +3,12 @@ package com.movieGo.service;
 import java.util.Collections;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,14 +30,27 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Service
-
+@PropertySource("classpath:application.properties")
 public class UserService implements UserDetailsService{
+	
+	@Autowired
+    Environment env;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private UserRepo userRepo;
+	
+	@PostConstruct
+	private void loadAdmin() {
+		String adminMail = env.getProperty("admin.mail");
+		String adminPw = env.getProperty("admin.pw");
+		if (userRepo.findUserByMail(adminMail) == null) {
+			User admin = new User(adminMail, passwordEncoder.encode(adminPw), User.ROLE_ADMIN);
+			userRepo.save(admin);
+		}
+	}
 	
 	@Override
 	public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
@@ -60,6 +77,12 @@ public class UserService implements UserDetailsService{
 	}
 	
 	public boolean signup(User user) {
+		if (userRepo.findUserByMail(user.getMail()) == null) {
+			user.setPw(passwordEncoder.encode(user.getPw()));
+			userRepo.save(user);
+			signin(user);
+			return true;
+		}
 		return false;
 	}
 	
