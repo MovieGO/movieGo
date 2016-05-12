@@ -21,6 +21,10 @@ public class Movie extends baseEntity{
 	 */
 	private static final long serialVersionUID = -7237540471162355519L;
 	
+	public static enum Type {
+		LOVE, ADVENTURE, ACTION, SEX, DOCUMENTARY
+	}
+	
 	@ManyToMany(mappedBy = "movies")
 	private List<Cinema> cinemas = new ArrayList<Cinema>();
 	
@@ -30,7 +34,10 @@ public class Movie extends baseEntity{
 	private @Getter @Setter String name;
 	
 	@Column
-	private @Getter @Setter String rating;
+	private @Getter @Setter Double rating;
+	
+	@Column
+	private @Getter @Setter Type type;
 	
 	@Column(nullable = false)
 	private @Getter @Setter String length;

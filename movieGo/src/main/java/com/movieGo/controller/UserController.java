@@ -10,26 +10,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.movieGo.entity.User;
-import com.movieGo.form.loginForm;
 import com.movieGo.service.UserService;
 
 @Controller
-public class trySecurity {
+
+public class UserController {
 	@Autowired
 	private UserService userService;
-	public trySecurity() {super();}
+	public UserController() {super();}
 	
-	@RequestMapping(value = "/")
-	public @ResponseBody String mainPage() {
-		return "hello";
-	}
-	
-	/*@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(loginForm loginform) {
-		User user = new User(loginform.getMail(),loginform.getPw(),User.ROLE_USER);
-		userService.signin(user);
-		return "redirect:/";
-	}*/
 	
 	@RequestMapping("/login")
     public String signin(Principal principal, RedirectAttributes ra) {
@@ -37,7 +26,7 @@ public class trySecurity {
     }
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String loginGet(loginForm loginform) {
+	public String loginGet() {
 		return "login";
 	}
 	
@@ -51,10 +40,5 @@ public class trySecurity {
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signupGet(User user) {
 		return "signup";
-	}
-	
-	@RequestMapping(value = "/admin", method = RequestMethod.GET)
-	public @ResponseBody String onlyAdmin() {
-		return "hello, admin";
 	}
 }

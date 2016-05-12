@@ -39,12 +39,12 @@ public class Cinema  extends baseEntity{
 	}
 	
 	@Column(nullable = false)
-	private @Setter @Getter String city;
+	private @Setter @Getter Integer city;
 	
 	@Column(nullable = false)
 	private @Setter @Getter String address;
 	
-	private @Setter @Getter String rating;
+	private @Setter @Getter Integer rating;
 	
 	
 }

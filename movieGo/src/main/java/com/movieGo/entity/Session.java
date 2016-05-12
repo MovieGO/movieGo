@@ -49,6 +49,9 @@ public class Session extends baseEntity{
 	@Column(nullable = false)
 	private @Setter @Getter Date endTime;
 	
+	@Column(nullable = false)
+	private @Setter @Getter Date date;
+	
 	public void setSeatStatus(int x, int y, seatStatus s) {
 		if (seats[x][y] != seatStatus.NOTASEAT) {
 			seats[x][y] = s;
