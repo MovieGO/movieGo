@@ -18,25 +18,22 @@ public class Cinema  extends baseEntity{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3678059644036355241L;
-	
-	@OneToMany(cascade = {  CascadeType.PERSIST,
-							CascadeType.MERGE,
-							CascadeType.REMOVE },
-			   mappedBy = "cinema")
-	private @Getter Set<Session> sessions;
-	
 	public Cinema() {super();}
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable( name = "cinema_movie",
-    			joinColumns = {@JoinColumn(name = "cinema_id", nullable = false, updatable = false)},
-    			inverseJoinColumns = {@JoinColumn(name = "movie_id", nullable = false, updatable = false)})
-	private @Getter List<Movie> movies = new ArrayList<Movie>();
+	private static final long serialVersionUID = 3678059644036355241L;
+	
+	@OneToMany(mappedBy = "cinema")
+	private @Setter @Getter List<Session> sessions = new ArrayList<Session>();
+	
+	@ManyToMany(mappedBy="cinemas")
+	public @Setter @Getter List<Movie> movies = new ArrayList<Movie>();
 	
 	public void addSession(Session session) {
 		sessions.add(session);
 	}
+	
+	@Column(nullable = false)
+	private @Setter @Getter String name;
 	
 	@Column(nullable = false)
 	private @Setter @Getter Integer city;
@@ -45,6 +42,4 @@ public class Cinema  extends baseEntity{
 	private @Setter @Getter String address;
 	
 	private @Setter @Getter Integer rating;
-	
-	
 }

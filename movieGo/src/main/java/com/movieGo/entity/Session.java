@@ -1,8 +1,14 @@
 package com.movieGo.entity;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -29,10 +35,13 @@ public class Session extends baseEntity{
 	public Session() {super();}
 	
 	@ManyToOne
-	private Cinema cinema;
+	private @Setter @Getter Cinema cinema;
 	
 	@ManyToOne
-	private Movie movie;
+	private @Setter @Getter Movie movie;
+	
+	@OneToMany
+	private @Setter @Getter Set<Order> orders = new HashSet<Order>();
 	
 	@Column(nullable = false)
 	private @Setter @Getter String hall;
@@ -44,17 +53,27 @@ public class Session extends baseEntity{
 	private @Setter @Getter seatStatus[][] seats;
 	
 	@Column(nullable = false)
-	private @Setter @Getter Date showTime;
+	private @Getter Date showTime;
 	
 	@Column(nullable = false)
 	private @Setter @Getter Date endTime;
 	
 	@Column(nullable = false)
-	private @Setter @Getter Date date;
+	private @Setter @Getter String date;
 	
 	public void setSeatStatus(int x, int y, seatStatus s) {
 		if (seats[x][y] != seatStatus.NOTASEAT) {
 			seats[x][y] = s;
 		}
+	}
+	
+	private void setDate() {
+		DateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+		this.date = f.format(showTime);
+	}
+	
+	public void setShowTime(Date t) {
+		this.showTime = t;
+		setDate();
 	}
 }

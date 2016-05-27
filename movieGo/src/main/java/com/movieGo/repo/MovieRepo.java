@@ -20,8 +20,14 @@ import com.movieGo.entity.User;
 public interface MovieRepo extends JpaRepository<Movie, Long> {
 	Page<Movie> findAll(Specification<Movie> cond, Pageable pageRequest);
 	@Query(
-			"SELECT m from Movie m INNER JOIN m.cinemas c"+ 
+			"SELECT m from Movie m INNER JOIN m.cinemas c "+ 
 			"WHERE c.name = :cinema"	
 			)
 	Page<Movie> findByCinema(@Param("cinema") String cinemaName, Pageable pageRequest);
+	@Query(
+			"SELECT DISTINCT m FROM Movie m JOIN FETCH m.cinemas "
+			+ "WHERE m.id = :mid")
+	Movie fetchCinemas(@Param("mid") Long mid);
+
+	Movie findByName(String name);
 }

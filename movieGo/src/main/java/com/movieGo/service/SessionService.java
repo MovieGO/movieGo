@@ -15,6 +15,14 @@ import com.movieGo.support.querySupport.SessionQuery;
 public class SessionService {
 	@Autowired
 	private SessionRepo sessionRepo;
+	/**
+	 * 按照条件查找场次
+	 * @param pageSize 每页几个
+	 * @param page 第几页
+	 * @param sf 查询条件
+	 * @return Page 查到的场次
+	 * @see com.movieGo.form.sessionQueryForm
+	 */
 	public Page<Session> getAllSessions(int page, int pageSize, sessionQueryForm sf) {
 		return sessionRepo.findAll(
 				new SessionQuery(sf),

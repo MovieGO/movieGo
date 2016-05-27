@@ -1,6 +1,7 @@
 package com.movieGo.service;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -22,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.movieGo.entity.Order;
 import com.movieGo.entity.User;
 import com.movieGo.form.changePwForm;
 import com.movieGo.repo.UserRepo;
@@ -64,7 +66,10 @@ public class UserService implements UserDetailsService{
 	private GrantedAuthority createAuthority(User user) {
         return new SimpleGrantedAuthority(user.getRole());
     }
-	
+	/**
+	 * 
+	 * @return user
+	 */
 	public User getCurrentUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if(auth == null || auth instanceof AnonymousAuthenticationToken){
@@ -75,17 +80,24 @@ public class UserService implements UserDetailsService{
 
         return userRepo.findUserByMail(email);
 	}
-	
-	public boolean signup(User user) {
+	/**
+	 * 注册
+	 * @param user 用户
+	 * @return 保存的user,如果失败返回null
+	 */
+	public User signup(User user) {
 		if (userRepo.findUserByMail(user.getMail()) == null) {
 			user.setPw(passwordEncoder.encode(user.getPw()));
 			userRepo.save(user);
 			signin(user);
-			return true;
+			return user;
 		}
-		return false;
+		return null;
 	}
-	
+	/**
+	 * 登录
+	 * @param user 用户
+	 */
 	public void signin(User user) {
 		SecurityContextHolder.getContext().setAuthentication(authenticate(user));
 	}
@@ -103,7 +115,12 @@ public class UserService implements UserDetailsService{
                 user.getPw(),
                 Collections.singleton(createAuthority(user)));
     }
-	
+	/**
+	 * 修改密码
+	 * @param form 改密码的表单
+	 * @return 改成功了没
+	 * @see com.movieGo.form.changePwForm
+	 */
 	public boolean changePw(changePwForm form) {
 		String pw = form.getOldPw();
 		String newPw = form.getNewPw();
@@ -113,5 +130,19 @@ public class UserService implements UserDetailsService{
 		user.setPw(passwordEncoder.encode(newPw));
 		userRepo.save(user);
 		return true;
+	}
+	/**
+	 * 查询用户的所有订单
+	 * @param u 用户
+	 * @return 已经加载orders的用户
+	 */
+	public User getOrders(User u) {
+		User tmp = userRepo.fetchOrders(u.getId());
+		if (tmp == null) {
+			u.setOrders(new HashSet<Order>());
+		} else {
+			u = tmp;
+		}
+		return u;
 	}
 }

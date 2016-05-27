@@ -54,10 +54,7 @@ public class User extends baseEntity{
     @Column
 	private @Setter @Getter int age;
     
-    @OneToMany(cascade = {  CascadeType.PERSIST,
-            				CascadeType.MERGE,
-            				CascadeType.REMOVE },
-    		   mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
   	private @Getter Set<Order> orders = new HashSet<>();
     
     public void addOrder(Order order) {

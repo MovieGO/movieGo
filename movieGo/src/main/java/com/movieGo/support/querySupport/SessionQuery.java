@@ -30,12 +30,11 @@ public class SessionQuery implements Specification<Session>{
 			list.add(cb.equal(root.get("cinema"), cond.getCinema()));
 		}
 		if (cond.getDate() != null) {
-			list.add(cb.equal(root.get("date"), cond.getDate()));
+			list.add(cb.equal(root.get("date"),cond.getDate()));
 		}
 		if (cond.getMovie() != null) {
 			list.add(cb.equal(root.get("movie"), cond.getMovie()));
 		}
-		
 		Predicate[] p = new Predicate[list.size()];  
 	    return cb.and(list.toArray(p));
 	}

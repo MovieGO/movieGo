@@ -17,10 +17,21 @@ import com.movieGo.entity.Movie;
 public interface CinemaRepo extends JpaRepository<Cinema, Long> {
 	Page<Cinema> findAll(Specification<Cinema> cond, Pageable pageRequest);
 	@Query(
-			"SELECT c from Cinema c INNER JOIN c.movies m"+ 
+			"SELECT c from Cinema c INNER JOIN c.movies m "+ 
 			"WHERE m.name = :movie"	
 					)
 	Page<Cinema> findByMovie(@Param("movie") String movieName, Pageable pageRequest);
+	
+	@Query(
+			"SELECT DISTINCT c FROM Cinema c JOIN FETCH c.sessions "
+			+ "WHERE c.id = :cid"
+			)
+	Cinema fetchSessions(@Param("cid") Long cid);
+	
+	@Query(
+			"SELECT DISTINCT c FROM Cinema c JOIN FETCH c.movies "
+			+ "WHERE c.id = :cid")
+	Cinema fetchMovies(@Param("cid") Long cid);
 }
 
 

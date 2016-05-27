@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -25,8 +27,11 @@ public class Movie extends baseEntity{
 		LOVE, ADVENTURE, ACTION, SEX, DOCUMENTARY
 	}
 	
-	@ManyToMany(mappedBy = "movies")
-	private List<Cinema> cinemas = new ArrayList<Cinema>();
+	@ManyToMany
+	@JoinTable(name = "cinema_movie",
+		joinColumns = {@JoinColumn(name = "movie_id", nullable = false, updatable = false)},
+		inverseJoinColumns = {@JoinColumn(name = "cinema_id", nullable = false, updatable = false)})
+	public List<Cinema> cinemas = new ArrayList<Cinema>();
 	
 	public Movie() {super();}
 	
@@ -40,7 +45,7 @@ public class Movie extends baseEntity{
 	private @Getter @Setter Type type;
 	
 	@Column(nullable = false)
-	private @Getter @Setter String length;
+	private @Getter @Setter Double length;
 	
 	@Column
 	private @Getter @Setter String director;
