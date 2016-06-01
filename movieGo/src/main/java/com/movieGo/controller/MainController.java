@@ -10,6 +10,6 @@ public class MainController {
 	
 	@RequestMapping(value = "/")
 	public @ResponseBody String mainPage() {
-		return "hello";
+		return "index";
 	}
 }
